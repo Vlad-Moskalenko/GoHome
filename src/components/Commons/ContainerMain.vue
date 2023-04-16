@@ -1,6 +1,4 @@
-<script setup>
-
-</script>
+<script setup></script>
 
 <template>
   <div class="container">
@@ -9,8 +7,8 @@
 </template>
 
 <style lang="scss" scoped>
-  .container {
-    max-width: 1110px;
-    margin: 0 auto;
-  }
+.container {
+  max-width: 1110px;
+  margin: 0 auto;
+}
 </style>
