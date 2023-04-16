@@ -1,16 +1,45 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
+
+import apartments from '../components/Apartment/apartment'
+import ApartmentMainInfo from '../components/Apartment/ApartmentMainInfo.vue'
+import ApartmentOwner from '../components/Apartment/ApartmentOwner.vue'
 
 const route = useRoute()
 
+const apartment = computed(() => apartments.find((apartment) => apartment.id === route.params.id))
+
 onMounted(() => {
-  console.log(route.params.id)
+  console.log(apartment.value)
 })
 </script>
 
 <template>
-  <h2>Apartment Page</h2>
+  <main class="apartment-page">
+    <div class="apartment-page__content">
+      <ApartmentMainInfo :apartment="apartment" />
+      <div class="apartment-page__additional-info">
+        <ApartmentOwner :owner="apartment.owner" />
+      </div>
+    </div>
+  </main>
 </template>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.apartment-page {
+  padding: 60px;
+
+  &__content {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  &__additional-info {
+    margin-left: 30px;
+    max-width: 350px;
+    flex-grow: 0;
+    flex-shrink: 1;
+  }
+}
+</style>
