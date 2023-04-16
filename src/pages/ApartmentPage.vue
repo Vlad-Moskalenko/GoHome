@@ -5,10 +5,15 @@ import { useRoute } from 'vue-router'
 import apartments from '../components/Apartment/apartment'
 import ApartmentMainInfo from '../components/Apartment/ApartmentMainInfo.vue'
 import ApartmentOwner from '../components/Apartment/ApartmentOwner.vue'
+import ReviewsSection from '../components/Reviews/ReviewsSection.vue'
+
+import reviews from '../components/Reviews/reviews.json'
 
 const route = useRoute()
 
 const apartment = computed(() => apartments.find((apartment) => apartment.id === route.params.id))
+
+const reviewsList = computed(() => reviews)
 
 onMounted(() => {
   console.log(apartment.value)
@@ -21,6 +26,7 @@ onMounted(() => {
       <ApartmentMainInfo :apartment="apartment" />
       <div class="apartment-page__additional-info">
         <ApartmentOwner :owner="apartment.owner" />
+        <ReviewsSection :reviews="reviewsList" />
       </div>
     </div>
   </main>
