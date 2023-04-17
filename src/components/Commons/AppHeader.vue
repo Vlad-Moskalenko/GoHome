@@ -6,7 +6,9 @@ import ContainerMain from './ContainerMain.vue'
 <template>
   <header class="header">
     <ContainerMain>
-      <CompanyLogo />
+      <RouterLink to="/">
+        <CompanyLogo />
+      </RouterLink>
     </ContainerMain>
   </header>
 </template>

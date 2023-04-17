@@ -1,22 +1,27 @@
 <script setup>
-import { onMounted, computed } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
-import apartments from '../components/Apartment/apartment'
+import { getApartmentById } from '../services/apartments.service'
+
 import ApartmentMainInfo from '../components/Apartment/ApartmentMainInfo.vue'
 import ApartmentOwner from '../components/Apartment/ApartmentOwner.vue'
 import ReviewsSection from '../components/Reviews/ReviewsSection.vue'
 
 import reviews from '../components/Reviews/reviews.json'
 
+const apartment = ref(null)
 const route = useRoute()
-
-const apartment = computed(() => apartments.find((apartment) => apartment.id === route.params.id))
 
 const reviewsList = computed(() => reviews)
 
-onMounted(() => {
-  console.log(apartment.value)
+onBeforeMount(async () => {
+  try {
+    const { data } = await getApartmentById(route.params.id)
+    apartment.value = data
+  } catch (error) {
+    console.log(error)
+  }
 })
 </script>
 

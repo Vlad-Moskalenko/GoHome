@@ -1,22 +1,71 @@
 <script setup>
-defineProps({
-  modelValue: String
+import { ref, watch, inject, onMounted, onUnmounted } from 'vue'
+
+const props = defineProps({
+  modelValue: String,
+  errorMessage: String,
+  placeholder: String,
+  name: String,
+  type: {
+    type: String,
+    default: 'text'
+  },
+  rules: {
+    type: Array,
+    default: () => []
+  }
 })
+
+const isValid = ref(true)
+const error = ref('')
+const input = ref(null)
 
 const emit = defineEmits(['update:modelValue'])
 
-const updateValue = (event) => {
-    emit('update:modelValue', event.target.value)
+const validate = () => {
+  isValid.value = props.rules.every((rule) => {
+    const { hasPassed, message } = rule(props.modelValue)
+    if (!hasPassed) {
+      error.value = message || props.errorMessage.value
+    }
+
+    return hasPassed
+  })
+
+  return isValid
 }
+
+const updateValue = (event) => {
+  emit('update:modelValue', event.target.value)
+}
+
+watch(
+  () => props.modelValue,
+  () => validate()
+)
+
+const form = inject('form')
+
+onMounted(() => form.registerInput(input))
+
+onUnmounted(() => form.unRegisterInput(input))
 </script>
 
 <template>
   <div class="wrapper-input">
-    <input type="text" :value="modelValue" @input="updateValue" class="custom-input"/>
-    <!-- <span v-if="!isValid" class="custom-input__error">{{ error }}</span> -->
+    <input
+      ref="input"
+      :type="props.type"
+      :value="props.modelValue"
+      :name="props.name"
+      @input="updateValue"
+      class="custom-input"
+      :placeholder="props.placeholder"
+      :class="!isValid && 'custom-input--error'"
+    />
+    <span v-if="!isValid" class="custom-input__error">{{ error }}</span>
   </div>
 </template>
-
 
 <style lang="scss" scoped>
 @import '../../assets/scss/variables';

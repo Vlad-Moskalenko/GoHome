@@ -1,23 +1,23 @@
 <script setup>
-import { ref } from 'vue'
-import { computed } from 'vue'
+import { ref, computed, onBeforeMount } from 'vue'
 
 import ApartmentsList from '../components/Apartment/ApartmentsList.vue'
 import ApartmentFilterForm from '../components/Apartment/ApartmentFilterForm.vue'
-
-import apartments from '../components/Apartment/apartment'
-
-const filter = ({ city, price }) => {
-  ;(filters.value.city = city), (filters.value.price = price)
-}
-
-const filteredApartments = computed(() => {
-  return filterByCityName(filterByPrice(apartments))
-})
+import { getApartmentsList } from '../services/apartments.service'
 
 const filters = ref({
   city: '',
   price: ''
+})
+const apartments = ref([])
+
+const filter = ({ city, price }) => {
+  filters.value.city = city
+  filters.value.price = price
+}
+
+const filteredApartments = computed(() => {
+  return filterByCityName(filterByPrice(apartments.value))
 })
 
 const filterByCityName = (apartments) => {
@@ -31,6 +31,16 @@ const filterByPrice = (apartments) => {
 
   return apartments.filter((apartment) => apartment.price >= filters.value.price)
 }
+
+onBeforeMount(async () => {
+  try {
+    const { data } = await getApartmentsList()
+    // apartments.value = data
+    console.log(data)
+  } catch (error) {
+    console.log(error)
+  }
+})
 </script>
 
 <template>
