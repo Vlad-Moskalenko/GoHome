@@ -1,6 +1,7 @@
 <script setup>
 import AppFooter from './components/Commons/AppFooter.vue'
 import AppHeader from './components/Commons/AppHeader.vue'
+import AppNotifications from './components/Commons/AppNotifications.vue'
 </script>
 
 <template>
@@ -8,6 +9,7 @@ import AppHeader from './components/Commons/AppHeader.vue'
     <AppHeader />
     <RouterView />
     <AppFooter />
+    <AppNotifications />
   </div>
 </template>
 

@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { notify } from '@kyvg/vue3-notification'
 
 import AuthForm from '../Forms/AuthForm.vue'
 import CustomInput from '../Commons/CustomInput.vue'
@@ -27,7 +28,11 @@ const handleSubmit = async (event) => {
       const { data } = await loginUser(formData.value)
       console.log(data)
     } catch (e) {
-      console.log(e)
+      notify({
+        type: 'error',
+        title: 'Error',
+        text: e.message
+      })
     } finally {
       loading.value = false
     }
