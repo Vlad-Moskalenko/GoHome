@@ -4,6 +4,7 @@ import { ref, computed, onBeforeMount } from 'vue'
 import ApartmentsList from '../components/Apartment/ApartmentsList.vue'
 import ApartmentFilterForm from '../components/Apartment/ApartmentFilterForm.vue'
 import { getApartmentsList } from '../services/apartments.service'
+import ContainerMain from '../components/Commons/ContainerMain.vue'
 
 const filters = ref({
   city: '',
@@ -45,11 +46,13 @@ onBeforeMount(async () => {
 
 <template>
   <main class="home-page">
-    <ApartmentFilterForm class="apartments-filter" @submit="filter" />
-    <p v-if="!filteredApartments.length">Ничего не найдено</p>
-    <ApartmentsList v-else :items="filteredApartments">
-      <template v-slot:title>Title</template>
-    </ApartmentsList>
+    <ContainerMain>
+      <ApartmentFilterForm class="apartments-filter" @submit="filter" />
+      <p v-if="!filteredApartments.length">Ничего не найдено</p>
+      <ApartmentsList v-else :items="filteredApartments">
+        <template v-slot:title>Title</template>
+      </ApartmentsList>
+    </ContainerMain>
   </main>
 </template>
 

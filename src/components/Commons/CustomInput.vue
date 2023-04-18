@@ -5,6 +5,7 @@ const props = defineProps({
   modelValue: String,
   errorMessage: String,
   placeholder: String,
+  autocomplete: String,
   name: String,
   type: {
     type: String,
@@ -44,11 +45,15 @@ watch(
   () => validate()
 )
 
-const form = inject('form')
+const form = inject({
+  form: {
+    default: null
+  }
+})
 
-onMounted(() => form.registerInput(input))
+onMounted(() => form?.registerInput(input))
 
-onUnmounted(() => form.unRegisterInput(input))
+onUnmounted(() => form?.unRegisterInput(input))
 </script>
 
 <template>

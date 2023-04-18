@@ -21,27 +21,44 @@ defineProps({
   </button>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
 .btn {
-  padding: 11px 34px;
-
-  font-family: 'Montserrat Medium';
+  position: relative;
+  display: inline-block;
   font-size: 18px;
-  line-height: 1.17px;
-
-  color: #ffffff;
   background: #ff662d;
+  color: #fff;
+  cursor: pointer;
+  min-width: 220px;
+  border: 1px solid transparent;
+  padding: 8px 15px;
+  transition: background-color 0.4s, color 0.4s;
+  font-family: Montserrat, sans-serif;
 
-  border: none;
-}
+  &:hover {
+    background: #fff;
+    color: #ff662d;
+    border: 1px solid #ff662d;
+  }
 
-.btn--outlined {
-  color: #000000;
-  background-color: transparent;
-  border: 1px solid #ff662d;
-}
+  &--outlined {
+    background: none;
+    border: 1px solid #ff662d;
+    color: #ff662d;
+  }
 
-.btn:disabled {
-  opacity: 0.3;
+  &__content {
+    &--hidden {
+      opacity: 0;
+    }
+  }
+
+  &__loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 }
 </style>

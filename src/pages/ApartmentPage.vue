@@ -9,6 +9,7 @@ import ApartmentOwner from '../components/Apartment/ApartmentOwner.vue'
 import ReviewsSection from '../components/Reviews/ReviewsSection.vue'
 
 import reviews from '../components/Reviews/reviews.json'
+import ContainerMain from '../components/Commons/ContainerMain.vue'
 
 const apartment = ref(null)
 const route = useRoute()
@@ -27,13 +28,15 @@ onBeforeMount(async () => {
 
 <template>
   <main class="apartment-page">
-    <div class="apartment-page__content">
-      <ApartmentMainInfo :apartment="apartment" />
-      <div class="apartment-page__additional-info">
-        <ApartmentOwner :owner="apartment.owner" />
-        <ReviewsSection :reviews="reviewsList" />
+    <ContainerMain>
+      <div class="apartment-page__content">
+        <ApartmentMainInfo :apartment="apartment" />
+        <div class="apartment-page__additional-info">
+          <ApartmentOwner :owner="apartment.owner" />
+          <ReviewsSection :reviews="reviewsList" />
+        </div>
       </div>
-    </div>
+    </ContainerMain>
   </main>
 </template>
 

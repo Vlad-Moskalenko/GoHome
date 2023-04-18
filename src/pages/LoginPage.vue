@@ -1,10 +1,10 @@
 <script setup>
-import AppLogin from '../components/Login/AppLogin.vue'
+import LoginAuth from '../components/Auth/LoginAuth.vue'
 </script>
 
 <template>
   <main class="login">
-    <AppLogin />
+    <LoginAuth />
   </main>
 </template>
 

@@ -1,5 +1,4 @@
 <script setup>
-import ContainerMain from './components/Commons/ContainerMain.vue'
 import AppFooter from './components/Commons/AppFooter.vue'
 import AppHeader from './components/Commons/AppHeader.vue'
 </script>
@@ -7,9 +6,7 @@ import AppHeader from './components/Commons/AppHeader.vue'
 <template>
   <div class="content">
     <AppHeader />
-    <ContainerMain>
-      <RouterView />
-    </ContainerMain>
+    <RouterView />
     <AppFooter />
   </div>
 </template>
