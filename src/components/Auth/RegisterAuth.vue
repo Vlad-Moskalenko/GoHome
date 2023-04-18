@@ -16,6 +16,7 @@ const formData = ref({
   password: '',
   confirmPassword: ''
 })
+const loading = ref(false)
 
 const confirmPassword = () => ({
   hasPassed: formData.value.confirmPassword === formData.value.password,
@@ -31,10 +32,13 @@ const handleSubmit = async (event) => {
 
   if (passwordIsValid && emailIsValid && nameIsValid) {
     try {
+      loading.value = true
       const { data } = await registerUser({ name, password, email })
       console.log(data)
     } catch (e) {
       console.log(e)
+    } finally {
+      loading.value = false
     }
   }
 
@@ -67,7 +71,7 @@ const handleSubmit = async (event) => {
         />
         <CustomInput
           v-model="formData.password"
-          autocomplete="current-password"
+          autocomplete="new-password"
           type="password"
           name="password"
           :rules="[isRequired, passwordValidation]"
@@ -76,14 +80,14 @@ const handleSubmit = async (event) => {
         />
         <CustomInput
           v-model="formData.confirmPassword"
-          autocomplete="current-password"
+          autocomplete="new-password"
           type="password"
           name="confirmPassword"
           :rules="[isRequired, confirmPassword]"
           class="register__input"
           placeholder="Confirm password"
         />
-        <MainButton class="register__btn" type="submit">Register</MainButton>
+        <MainButton class="register__btn" type="submit" :loading="loading">Register</MainButton>
       </AuthForm>
     </AuthContainer>
   </AuthWrapper>

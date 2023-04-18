@@ -10,6 +10,7 @@ import AuthContainer from './AuthContainer.vue'
 import { isRequired, emailValidation } from '../../utils/validationRules'
 import { loginUser } from '../../services/auth.service'
 
+const loading = ref(false)
 const formData = ref({
   email: '',
   password: ''
@@ -22,10 +23,13 @@ const handleSubmit = async (event) => {
 
   if (passwordIsValid && emailIsValid) {
     try {
+      loading.value = true
       const { data } = await loginUser(formData.value)
       console.log(data)
     } catch (e) {
       console.log(e)
+    } finally {
+      loading.value = false
     }
   }
 }
@@ -54,7 +58,7 @@ const handleSubmit = async (event) => {
           class="login__input"
           placeholder="Password"
         />
-        <MainButton class="login__btn" type="submit">Login</MainButton>
+        <MainButton class="login__btn" type="submit" :loading="loading">Login</MainButton>
       </AuthForm>
     </AuthContainer>
   </AuthWrapper>

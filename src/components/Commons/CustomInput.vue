@@ -63,6 +63,7 @@ onUnmounted(() => form?.unRegisterInput(input))
       :type="props.type"
       :value="props.modelValue"
       :name="props.name"
+      :autocomplete="props.autocomplete"
       @input="updateValue"
       class="custom-input"
       :placeholder="props.placeholder"

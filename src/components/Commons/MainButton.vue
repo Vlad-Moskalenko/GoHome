@@ -1,10 +1,16 @@
 <script setup>
+import AppLoader from './AppLoader.vue'
+
 defineProps({
   type: {
     type: String,
     default: 'button'
   },
   outlined: {
+    type: Boolean,
+    default: false
+  },
+  loading: {
     type: Boolean,
     default: false
   }
@@ -16,8 +22,12 @@ defineProps({
     @click="$emit('increment')"
     :type="type"
     :class="{ btn: true, 'btn--outlined': outlined }"
+    :disabled="loading"
   >
-    <slot></slot>
+    <AppLoader v-if="loading" width="38" height="38" class="btn__loader" />
+    <span class="btn__content" :class="loading && 'btn__content--hidden'">
+      <slot></slot>
+    </span>
   </button>
 </template>
 
