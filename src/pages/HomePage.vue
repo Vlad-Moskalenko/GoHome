@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, onBeforeMount } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 
 import ApartmentsList from '../components/Apartment/ApartmentsList.vue'
 import ApartmentFilterForm from '../components/Apartment/ApartmentFilterForm.vue'
@@ -33,11 +33,11 @@ const filterByPrice = (apartments) => {
   return apartments.filter((apartment) => apartment.price >= filters.value.price)
 }
 
-onBeforeMount(async () => {
+onMounted(async () => {
   try {
-    const { data } = await getApartmentsList()
+    const resp = await getApartmentsList()
     // apartments.value = data
-    console.log(data)
+    console.log(resp)
   } catch (error) {
     console.log(error)
   }

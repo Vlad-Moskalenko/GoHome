@@ -1,11 +1,11 @@
 <template>
-  <section class="auth-section">
+  <section class="auth-wrapper">
     <slot></slot>
   </section>
 </template>
 
 <style lang="scss" scoped>
-.auth-section {
+.auth-wrapper {
   position: relative;
   display: flex;
   flex-direction: column;
@@ -14,7 +14,7 @@
   background: url('../../../public/img/auth-bg.jpg') no-repeat;
   background-size: cover;
   background-position: center;
-  min-height: calc(100vh - 30px);
+  min-height: calc(100vh - 30px - 63px);
   z-index: 1;
 
   &::before {

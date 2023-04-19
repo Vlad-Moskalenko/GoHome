@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { useStore } from 'vuex'
 import { notify } from '@kyvg/vue3-notification'
 
 import AuthForm from '../Forms/AuthForm.vue'
@@ -9,7 +10,7 @@ import AuthWrapper from './AuthWrapper.vue'
 import AuthContainer from './AuthContainer.vue'
 
 import { isRequired, emailValidation, passwordValidation } from '../../utils/validationRules'
-import { registerUser } from '../../services/auth.service'
+import router from '../../router'
 
 const formData = ref({
   name: '',
@@ -18,36 +19,35 @@ const formData = ref({
   confirmPassword: ''
 })
 const loading = ref(false)
+const store = useStore()
 
 const confirmPassword = () => ({
   hasPassed: formData.value.confirmPassword === formData.value.password,
   message: 'Passwords do not match'
 })
 
-const handleSubmit = async (event) => {
-  const form = event.target
-  const passwordIsValid = form.password.dataset.valid && form.password.value
-  const emailIsValid = form.email.dataset.valid && form.email.value
-  const nameIsValid = form.name.dataset.valid && form.name.value
+const handleSubmit = async () => {
+  // const form = event.target
+  // const passwordIsValid = form.password.dataset.valid && form.password.value
+  // const emailIsValid = form.email.dataset.valid && form.email.value
+  // const nameIsValid = form.name.dataset.valid && form.name.value
   const { name, password, email } = formData.value
 
-  if (passwordIsValid && emailIsValid && nameIsValid) {
-    try {
-      loading.value = true
-      const { data } = await registerUser({ name, password, email })
-      console.log(data)
-    } catch (e) {
-      notify({
-        type: 'error',
-        title: 'Error',
-        text: e.message
-      })
-    } finally {
-      loading.value = false
-    }
-  }
+  try {
+    loading.value = true
 
-  event.currentTarget.reset()
+    await store.dispatch('auth/register', { name, password, email })
+
+    router.push({ name: 'home' })
+  } catch (e) {
+    notify({
+      type: 'error',
+      title: 'Error',
+      text: e.message
+    })
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 

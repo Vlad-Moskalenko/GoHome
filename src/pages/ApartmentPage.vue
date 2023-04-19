@@ -20,6 +20,7 @@ onBeforeMount(async () => {
   try {
     const { data } = await getApartmentById(route.params.id)
     apartment.value = data
+    console.log(data)
   } catch (error) {
     console.log(error)
   }

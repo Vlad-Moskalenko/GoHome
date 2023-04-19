@@ -1,5 +1,6 @@
 <script setup>
 import { ref } from 'vue'
+import { useStore } from 'vuex'
 import { notify } from '@kyvg/vue3-notification'
 
 import AuthForm from '../Forms/AuthForm.vue'
@@ -9,33 +10,34 @@ import AuthWrapper from './AuthWrapper.vue'
 import AuthContainer from './AuthContainer.vue'
 
 import { isRequired, emailValidation } from '../../utils/validationRules'
-import { loginUser } from '../../services/auth.service'
+import router from '../../router'
 
 const loading = ref(false)
 const formData = ref({
   email: '',
   password: ''
 })
+const store = useStore()
 
-const handleSubmit = async (event) => {
-  const form = event.target
-  const passwordIsValid = form.password.dataset.valid && form.password.value
-  const emailIsValid = form.email.dataset.valid && form.email.value
+const handleSubmit = async () => {
+  // const form = event.target
+  // const passwordIsValid = form.password.dataset.valid && form.password.value
+  // const emailIsValid = form.email.dataset.valid && form.email.value
 
-  if (passwordIsValid && emailIsValid) {
-    try {
-      loading.value = true
-      const { data } = await loginUser(formData.value)
-      console.log(data)
-    } catch (e) {
-      notify({
-        type: 'error',
-        title: 'Error',
-        text: e.message
-      })
-    } finally {
-      loading.value = false
-    }
+  try {
+    loading.value = true
+
+    await store.dispatch('auth/login', formData.value)
+
+    router.push({ name: 'home' })
+  } catch (e) {
+    notify({
+      type: 'error',
+      title: 'Error',
+      text: e.message
+    })
+  } finally {
+    loading.value = false
   }
 }
 </script>

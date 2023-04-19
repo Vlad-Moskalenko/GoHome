@@ -1,6 +1,6 @@
 <script setup>
-import CompanyLogo from './CompanyLogo.vue'
-import ContainerMain from './ContainerMain.vue'
+import CompanyLogo from '../Commons/CompanyLogo.vue'
+import ContainerMain from '../Commons/ContainerMain.vue'
 </script>
 
 <template>

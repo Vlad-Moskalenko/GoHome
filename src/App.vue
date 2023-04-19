@@ -1,6 +1,6 @@
 <script setup>
 import AppFooter from './components/Commons/AppFooter.vue'
-import AppHeader from './components/Commons/AppHeader.vue'
+import AppHeader from './components/Header/AppHeader.vue'
 import AppNotifications from './components/Commons/AppNotifications.vue'
 </script>
 
