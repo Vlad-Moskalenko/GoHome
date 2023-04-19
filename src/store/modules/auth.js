@@ -1,4 +1,4 @@
-import { loginUser, registerUser } from '../../services/auth.service'
+import { loginUser, registerUser, logout } from '../../services/auth.service'
 
 const initialState = {
   user: null,
@@ -20,6 +20,9 @@ const authModules = {
     setToken(state, token) {
       console.log(state.user)
       state.token = token
+    },
+    clearState(state) {
+      Object.assign(state, { ...initialState })
     }
   },
   actions: {
@@ -38,6 +41,10 @@ const authModules = {
 
       commit('setUserData', user)
       commit('setToken', token)
+    },
+    async logout({ commit }) {
+      await logout()
+      commit('clearState')
     }
   }
 }

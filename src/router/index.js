@@ -30,6 +30,11 @@ const router = createRouter({
       component: ApartmentPage
     },
     {
+      path: '/my-orders',
+      name: 'my-orders',
+      component: ApartmentPage
+    },
+    {
       path: '/:pathMatch(.*)',
       name: 'error-page',
       component: ErrorPage
