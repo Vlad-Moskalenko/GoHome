@@ -1,16 +1,35 @@
 <script setup>
 import { ref } from 'vue'
+import { useRoute } from 'vue-router'
 import { useStore } from 'vuex'
+import { notify } from '@kyvg/vue3-notification'
+
+import router from '../../router'
 
 const store = useStore()
 const isOpen = ref(false)
+const route = useRoute()
 
 const toggle = () => (isOpen.value = !isOpen.value)
 const open = () => (isOpen.value = true)
 const close = () => (isOpen.value = false)
 
-const handleLogOut = () => {
-  store.dispatch('auth/logout')
+const handleLogOut = async () => {
+  try {
+    await store.dispatch('auth/logout')
+
+    const { requiresAuth } = route.meta
+
+    if (requiresAuth) {
+      router.push({ name: 'login' })
+    }
+  } catch (e) {
+    notify({
+      type: 'error',
+      title: 'Error',
+      text: e.message
+    })
+  }
 }
 </script>
 

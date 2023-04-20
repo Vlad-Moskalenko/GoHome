@@ -21,7 +21,7 @@ const cities = computed(() => [
 ])
 
 const handleSubmit = () => {
-  emit('submit', data)
+  emit('submit', data.value)
 }
 
 const data = ref({

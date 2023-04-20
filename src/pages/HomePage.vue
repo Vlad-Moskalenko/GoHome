@@ -6,6 +6,8 @@ import ApartmentFilterForm from '../components/Apartment/ApartmentFilterForm.vue
 import { getApartmentsList } from '../services/apartments.service'
 import ContainerMain from '../components/Commons/ContainerMain.vue'
 
+import apartmentsData from '../components/Apartment/apartment'
+
 const filters = ref({
   city: '',
   price: ''
@@ -35,9 +37,9 @@ const filterByPrice = (apartments) => {
 
 onMounted(async () => {
   try {
-    const resp = await getApartmentsList()
-    // apartments.value = data
-    console.log(resp)
+    const { data } = await getApartmentsList()
+
+    apartments.value = data.length ? data : apartmentsData
   } catch (error) {
     console.log(error)
   }
@@ -48,9 +50,9 @@ onMounted(async () => {
   <main class="home-page">
     <ContainerMain>
       <ApartmentFilterForm class="apartments-filter" @submit="filter" />
-      <p v-if="!filteredApartments.length">Ничего не найдено</p>
+      <p v-if="!filteredApartments.length">Find nothing...</p>
       <ApartmentsList v-else :items="filteredApartments">
-        <template v-slot:title>Title</template>
+        <template v-slot:title>Apartments</template>
       </ApartmentsList>
     </ContainerMain>
   </main>
