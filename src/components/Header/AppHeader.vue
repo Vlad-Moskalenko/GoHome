@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue'
 import { useStore } from 'vuex'
 
 import CompanyLogo from '../Commons/CompanyLogo.vue'
@@ -8,8 +7,6 @@ import AccountActions from './AccountActions.vue'
 import AuthActions from './AuthActions.vue'
 
 const store = useStore()
-
-const isLoggedIn = ref(store.getters['auth/isLoggedIn'])
 </script>
 
 <template>
@@ -19,7 +16,7 @@ const isLoggedIn = ref(store.getters['auth/isLoggedIn'])
         <RouterLink to="/">
           <CompanyLogo />
         </RouterLink>
-        <AccountActions v-if="isLoggedIn" />
+        <AccountActions v-if="store.getters['auth/isLoggedIn']" />
         <AuthActions v-else />
       </div>
     </ContainerMain>

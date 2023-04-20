@@ -1,23 +1,55 @@
 <script setup>
+import { ref } from 'vue'
+import { notify } from '@kyvg/vue3-notification'
+
+import MainButton from '../Commons/MainButton.vue'
 import StarRating from '../Commons/StarRating.vue'
 
-defineProps({
+import { bookApartment } from '../../services/order.service'
+
+const props = defineProps({
   apartment: {
     type: Object,
     required: true
   }
 })
+const isLoading = ref(false)
+
+const handleApartmentBooking = async () => {
+  try {
+    isLoading.value = true
+    await bookApartment({
+      apartmentId: props.apartment.value.id,
+      date: Date.now()
+    })
+
+    notify({
+      type: 'success',
+      title: 'Order added successfully'
+    })
+  } catch (e) {
+    notify({
+      type: 'error',
+      title: 'Error',
+      text: e.message
+    })
+  } finally {
+    isLoading.value = false
+  }
+}
 </script>
 
 <template>
   <article class="apartment-main-info">
     <div class="apartment-main-info__heading">
-      <h1 class="apartment-main-info__title">{{ apartment.title }}</h1>
-      <StarRating :rating="apartment.rating" />
+      <h1 class="apartment-main-info__title">{{ props.apartment.title }}</h1>
+      <StarRating :rating="props.apartment.rating" />
     </div>
-    <img :src="apartment.imgUrl" alt="" class="apartment-main-info__photo" />
-    <p class="apartment-main-info__description">{{ apartment.descr }}</p>
-    <div class="apartment-main-info__btn"></div>
+    <img :src="props.apartment.imgUrl" alt="" class="apartment-main-info__photo" />
+    <p class="apartment-main-info__description">{{ props.apartment.descr }}</p>
+    <div class="apartment-main-info__btn">
+      <MainButton @click="handleApartmentBooking" :loading="isLoading">Booking</MainButton>
+    </div>
   </article>
 </template>
 

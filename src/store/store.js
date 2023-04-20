@@ -1,18 +1,19 @@
-import Vuex from 'vuex'
+// import Vuex from 'vuex'
+import { createStore } from 'vuex'
 import authModules from './modules/auth'
-import VuexPersistence from 'vuex-persist'
+// import VuexPersist from 'vuex-persist'
 
-const vuexLocal = new VuexPersistence({
-  key: 'auth',
-  storage: window.localStorage,
-  reducer: (state) => ({ token: state.auth.token })
-})
+// const vuexLocalStorage = new VuexPersist({
+//   key: 'auth',
+//   storage: window.localStorage,
+//   reducer: (state) => ({ token: state.auth.token })
+// })
 
-const store = new Vuex.Store({
+const store = createStore({
   modules: {
     auth: authModules
-  },
-  plugins: [vuexLocal.plugin]
+  }
+  // plugins: [vuexLocalStorage.plugin]
 })
 
 export default store

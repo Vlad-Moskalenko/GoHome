@@ -1,15 +1,15 @@
 <script setup>
 import { computed, onBeforeMount, ref } from 'vue'
 import { useRoute } from 'vue-router'
-
-import { getApartmentById } from '../services/apartments.service'
+import { notify } from '@kyvg/vue3-notification'
 
 import ApartmentMainInfo from '../components/Apartment/ApartmentMainInfo.vue'
 import ApartmentOwner from '../components/Apartment/ApartmentOwner.vue'
 import ReviewsSection from '../components/Reviews/ReviewsSection.vue'
+import ContainerMain from '../components/Commons/ContainerMain.vue'
 
 import reviews from '../components/Reviews/reviews.json'
-import ContainerMain from '../components/Commons/ContainerMain.vue'
+import { getApartmentById } from '../services/apartments.service'
 
 const apartment = ref(null)
 const route = useRoute()
@@ -20,9 +20,12 @@ onBeforeMount(async () => {
   try {
     const { data } = await getApartmentById(route.params.id)
     apartment.value = data
-    console.log(data)
-  } catch (error) {
-    console.log(error)
+  } catch (e) {
+    notify({
+      type: 'error',
+      title: 'Error',
+      text: e.message
+    })
   }
 })
 </script>
